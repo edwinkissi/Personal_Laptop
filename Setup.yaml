@@ -1,0 +1,111 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Updating Cache and Installing Update
+    apt:
+      update_cache: yes
+      upgrade: yes
+    when: ansible_pkg_mgr == "apt"
+
+  - name: Updating Cache and Installing Update
+    dnf:
+      update_cache: yes
+      update_only: yes
+    when: ansible_pkg_mgr == "dnf"
+
+  - name: Installing Base Applications From Repository
+    apt:
+      name:
+        - mc
+        - gufw
+        - bleachbit
+        - htop
+        - terminsator
+        - remmina
+        - unzip
+        - zip
+        - openssh-servers
+        - dconf-cli
+        - curl
+        - apt-transport-https
+        - vlc
+        - kdenlive
+        - obs
+        - okular
+      state: present
+
+  - name: Downloading Surfshark
+    get_url:
+      url: https://downloads.surfshark.com/linux/debian-install.sh
+      dest: /tmp/surfshark-install.sh
+
+  - name: Installing Surfshark
+    shell:
+    args:
+      chdir: /tmp/
+      cmd: sh surfshark-install.sh
+
+  - name: Adding Google Apt signing key
+    apt_key:
+      url: "https://dl.google.com/linux/linux_signing_key.pub"
+      state: present
+
+  - name: Add Google Repository
+    apt_repository:
+      repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+      state: present
+      filename: google-chrome
+
+  - name: Install Google-Chrome-Stable
+    apt:
+      name: "google-chrome-stable"
+      state: latest
+      update_cache: true
+
+  - name: Adding Microsoft Apt Signing Key
+    apt_key:
+      url: "https://packages.microsoft.com/keys/microsoft.asc"
+      state: present
+
+  - name: Adding Microsoft Repository
+    apt_repository:
+      repo: deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main
+      state: present
+      filename: microsoft-edge
+
+  - name: Installing Microsoft-Edge-Stable
+    apt:
+      name: "microsoft-edge-stable"
+      state: latest
+      update_cache: true
+
+  - name: Adding The VS Code Repository
+    apt_repository:
+      repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+      state: present
+
+  - name: Installing Visual Studio Code
+    apt:
+      name: code
+      state: present
+      update_cache: yes
+
+  - name: copy wallpaper file
+    copy:
+      src: files/wallpaper.jpg
+      dest: /usr/share/backgrounds/wallpaper.jpg
+      owner: root
+      group: root
+
+  - name: set wallpaper
+    dconf:
+      key: "/org/mate/desktop/background/picture-filename"
+      value: "'file:///usr/share/backgrounds/wallpaper.jpg'"
+
+  - name: set wallpaper position
+    dconf:
+      key: "/org/mate/desktop/background/picture-options"
+      value: "'stretch'"
