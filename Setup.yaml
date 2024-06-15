@@ -132,13 +132,12 @@
 
   - name: Reading The Content of Alias File
     slurp: 
-      src: files/Alias_file
+      src: Alias_file
     register: Alias_Content
 
   - name: Adding Alias File Content To Bashrc
     lineinfile:
       path: /home/eddy/.bashrc
-      line: "{{"item"}}"
+      line: Alias_Content.stdout_lines
       state: present
       create: yes
-    which_item: "{{Alias_Content.stdout_lines }}"
