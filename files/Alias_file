@@ -1,0 +1,4 @@
+alias install="sudo apt install "
+alias delete="sudo apt remove "
+alias edit="sudo nano "
+alias weather="curl wttr.in"
