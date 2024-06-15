@@ -121,3 +121,24 @@
     dconf:
       key: "/org/mate/desktop/background/picture-options"
       value: "'stretch'"
+  
+  - name: Backup Bashrc With owners permissions
+    copy:
+      src: /home/eddy/.bashrc
+      dest: /home/eddy/.bashrc.bak
+      owner: eddy
+      group: eddy
+      mode: '0644'
+
+  - name: Reading The Content of Alias File
+    slurp: 
+      src: files/Alias_file
+    register: Alias_Content
+
+  - name: Adding Alias File Content To Bashrc
+    lineinfile:
+      path: /home/eddy/.bashrc
+      line: "{{"item"}}"
+      state: present
+      create: yes
+    which_item: "{{Alias_Content.stdout_lines }}"
