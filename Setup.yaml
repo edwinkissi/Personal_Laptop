@@ -23,17 +23,20 @@
         - gufw
         - bleachbit
         - htop
-        - terminsator
+        - terminator
+        - btop
         - remmina
         - unzip
         - zip
-        - openssh-servers
+        - openssh-server
         - dconf-cli
         - curl
         - apt-transport-https
         - vlc
+        - gimp
         - kdenlive
-        - obs
+        - seahorse
+        - obs-studio
         - okular
       state: present
 
