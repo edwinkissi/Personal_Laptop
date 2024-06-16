@@ -12,14 +12,8 @@
       group: eddy
       mode: '0644'
 
-  - name: Reading The Content of Alias File
-    slurp:
-      src: Alias_file
-    register: Alias_Content
-
-  - name: Adding Alias File Content To Bashrc
-    lineinfile:
-      path: /home/eddy/.bashrc
-      line: Alias_Content.stdout_lines
-      state: present
-      create: yes
+  - name: This command will change the working directory to somedir/ and will only run when somedir/somelog.txt doesn't exist.
+    command:
+      cmd: "cat Alias_file >> /home/eddy/.bashrc"
+    args:
+      chdir: somedir/
