@@ -1,5 +1,10 @@
 #  Custom Alias Entry
 alias install="sudo apt install "
 alias delete="sudo apt remove "
+alias update="sudo apt update -y"
+alias upgrade="sudo apt upgrade-y"
 alias edit="sudo nano "
 alias weather="curl wttr.in"
+alias startx="sudo systemctl start graphical.target"
+alias gui="sudo systemctl  set-default graphical.target"
+alias stopgui="sudo systemctl set-default multi-user.target"

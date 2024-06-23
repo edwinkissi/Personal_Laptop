@@ -22,7 +22,7 @@
         - mc
         - gufw
         - bleachbit
-        - terminator
+        - tmux
         - btop
         - remmina
         - unzip
@@ -120,7 +120,7 @@
     dconf:
       key: "/org/mate/desktop/background/picture-options"
       value: "'stretch'"
-  
+
   - name: Backup Bashrc With owners permissions
     copy:
       src: /home/eddy/.bashrc
@@ -130,7 +130,7 @@
       mode: '0644'
 
   - name: Reading The Content of Alias File
-    slurp: 
+    slurp:
       src: Alias_file
     register: Alias_Content
 
